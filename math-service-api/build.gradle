@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'com.google.protobuf' version '0.8.8'
+}
+
+def grpcVersion = '1.22.1'
+def protobufVersion = '3.7.1'
+
+sourceSets {
+    main {
+        java {
+            srcDir "${buildDir.absolutePath}/generated/source/proto/main/grpc"
+            srcDir "${buildDir.absolutePath}/generated/source/proto/main/java"
+        }
+    }
+}
+
+dependencies {
+    compile group: 'io.grpc', name: 'grpc-protobuf', version: grpcVersion
+    compile group: 'io.grpc', name: 'grpc-stub', version: grpcVersion
+    compileOnly group: 'javax.annotation', name: 'javax.annotation-api', version: '1.2'
+}
+
+protobuf {
+    protoc { artifact = "com.google.protobuf:protoc:${protobufVersion}" }
+    plugins {
+        grpc { artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}" }
+    }
+    generateProtoTasks {
+        all()*.plugins { grpc {} }
+    }
+}
