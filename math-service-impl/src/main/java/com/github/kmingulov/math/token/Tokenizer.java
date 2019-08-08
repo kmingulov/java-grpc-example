@@ -54,6 +54,10 @@ public class Tokenizer {
             return TokenType.NUMBER;
         }
 
+        if (Character.isWhitespace(c)) {
+            return null;
+        }
+
         if (Character.isAlphabetic(c)) {
             return TokenType.FUNCTION;
         }

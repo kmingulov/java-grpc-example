@@ -36,9 +36,20 @@ class TokenizerSpec extends Specification {
         Tokenizer.tokenize('3+5') == [ number('3'), binaryOperation('+'), number('5') ]
     }
 
+    def 'tokenizes 3 + 5' () {
+        expect:
+        Tokenizer.tokenize('3 + 5') == [ number('3'), binaryOperation('+'), number('5') ]
+    }
+
     def 'tokenizes 3+5*8' () {
         expect:
         Tokenizer.tokenize('3+5*8') \
+                == [ number('3'), binaryOperation('+'), number('5'), binaryOperation('*'), number('8') ]
+    }
+
+    def 'tokenizes 3 + 5  *  8' () {
+        expect:
+        Tokenizer.tokenize('3 + 5  *  8') \
                 == [ number('3'), binaryOperation('+'), number('5'), binaryOperation('*'), number('8') ]
     }
 
