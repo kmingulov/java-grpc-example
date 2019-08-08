@@ -2,7 +2,7 @@ package com.github.kmingulov.math.op;
 
 import java.util.function.BiFunction;
 
-class AbstractBinaryOperation implements BinaryOperation {
+final class AbstractBinaryOperation implements BinaryOperation {
 
     private final char symbol;
     private final int precedence;

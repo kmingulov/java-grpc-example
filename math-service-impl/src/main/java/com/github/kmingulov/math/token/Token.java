@@ -2,7 +2,7 @@ package com.github.kmingulov.math.token;
 
 import java.util.Objects;
 
-public class Token {
+public final class Token {
 
     private final TokenType type;
     private final String data;

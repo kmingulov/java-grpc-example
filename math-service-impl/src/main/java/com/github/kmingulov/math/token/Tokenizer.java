@@ -5,7 +5,7 @@ import com.google.common.collect.ImmutableSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tokenizer {
+public final class Tokenizer {
 
     private static final ImmutableSet<Character> DIGITS = ImmutableSet.of(
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'

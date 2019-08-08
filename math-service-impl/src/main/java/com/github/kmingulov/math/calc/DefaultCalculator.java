@@ -12,7 +12,7 @@ import java.util.List;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
-class DefaultCalculator implements Calculator {
+final class DefaultCalculator implements Calculator {
 
     private final ImmutableMap<Character, BinaryOperation> operationBySymbol;
 
