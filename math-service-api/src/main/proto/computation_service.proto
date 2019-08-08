@@ -7,25 +7,17 @@ option java_outer_classname = "ComputationServiceProto";
 package math_service;
 
 service ComputationService {
-    rpc ComputeExpression (ComputationRequest) returns (ComputationSubmission) {}
-    rpc ComputeExpressions (stream ComputationRequest) returns (stream ComputationSubmission) {}
-    rpc GetComputationResult (Id) returns (ComputationResult) {}
+    rpc ComputeExpression (ComputationRequest) returns (ComputationId) {}
+    rpc ComputeExpressions (stream ComputationRequest) returns (stream ComputationId) {}
+    rpc GetComputationResult (ComputationId) returns (ComputationResult) {}
 }
 
-message Id {
+message ComputationId {
     string id = 1;
 }
 
 message ComputationRequest {
     string expression = 1;
-}
-
-message ComputationSubmission {
-    bool ok = 1;
-    oneof error_or_id {
-        string error = 2;
-        Id id = 3;
-    }
 }
 
 enum ComputationState {
