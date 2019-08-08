@@ -69,4 +69,14 @@ class TokenizerSpec extends Specification {
                 == [ function('sin'), leftParenthesis(), number('5'), binaryOperation('+'), number('3'), rightParenthesis() ]
     }
 
+    def 'tokenizes (((' () {
+        expect:
+        Tokenizer.tokenize('(((') == [ leftParenthesis(), leftParenthesis(), leftParenthesis() ]
+    }
+
+    def 'tokenizes ++' () {
+        expect:
+        Tokenizer.tokenize('++') == [ binaryOperation('+'), binaryOperation('+') ]
+    }
+
 }

@@ -22,15 +22,17 @@ public class Tokenizer {
             char c = expression.charAt(end);
             TokenType tokenType = charCategory(c);
 
-            if (currentTokenType != tokenType) {
-                if (currentTokenType != null) {
-                    String token = expression.substring(start, end);
-                    tokens.add(new Token(currentTokenType, token));
-                }
-
-                currentTokenType = tokenType;
-                start = end;
+            if (tokenType == currentTokenType && (tokenType == TokenType.FUNCTION || tokenType == TokenType.NUMBER)) {
+                continue;
             }
+
+            if (currentTokenType != null) {
+                String token = expression.substring(start, end);
+                tokens.add(new Token(currentTokenType, token));
+            }
+
+            currentTokenType = tokenType;
+            start = end;
         }
 
         if (currentTokenType != null) {
