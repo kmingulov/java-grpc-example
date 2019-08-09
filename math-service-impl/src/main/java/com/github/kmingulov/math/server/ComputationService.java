@@ -11,7 +11,7 @@ import io.grpc.stub.StreamObserver;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-public class ComputationService extends ComputationServiceGrpc.ComputationServiceImplBase {
+public final class ComputationService extends ComputationServiceGrpc.ComputationServiceImplBase {
 
     private final ComputationWorker worker;
 

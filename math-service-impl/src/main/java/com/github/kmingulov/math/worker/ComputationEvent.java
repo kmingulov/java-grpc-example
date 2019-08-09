@@ -5,7 +5,7 @@ import com.github.kmingulov.math.model.ComputationState;
 
 import java.util.Objects;
 
-public class ComputationEvent {
+public final class ComputationEvent {
 
     private final ComputationId id;
     private final ComputationState state;

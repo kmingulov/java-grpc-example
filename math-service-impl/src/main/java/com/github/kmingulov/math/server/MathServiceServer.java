@@ -5,7 +5,7 @@ import io.grpc.ServerBuilder;
 
 import java.io.IOException;
 
-class MathServiceServer {
+final class MathServiceServer {
 
     private final Server server;
 

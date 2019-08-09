@@ -5,7 +5,7 @@ import com.github.kmingulov.math.op.BinaryOperation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CalculatorBuilder {
+public final class CalculatorBuilder {
 
     private final List<BinaryOperation> operations = new ArrayList<>();
 
