@@ -1,0 +1,27 @@
+buildscript {
+    dependencies {
+        classpath group: 'com.github.jengelman.gradle.plugins', name: 'shadow', version: shadowVersion
+    }
+}
+
+apply plugin: 'com.github.johnrengelman.shadow'
+
+dependencies {
+    implementation project(':math-service-api')
+
+    runtimeOnly group: 'io.grpc', name: 'grpc-netty-shaded', version: grpcVersion
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.github.kmingulov.math.client.Main'
+    }
+}
+
+shadowJar {
+    baseName = 'client'
+    classifier = null
+    version = null
+}
+
+build.finalizedBy shadowJar

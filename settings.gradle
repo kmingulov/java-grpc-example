@@ -2,3 +2,4 @@ rootProject.name = 'java-grpc-example'
 
 include 'math-service-api'
 include 'math-service-impl'
+include 'math-service-client'
