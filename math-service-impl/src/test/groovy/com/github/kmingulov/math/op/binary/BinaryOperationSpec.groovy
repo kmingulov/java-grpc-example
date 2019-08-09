@@ -1,4 +1,4 @@
-package com.github.kmingulov.math.op
+package com.github.kmingulov.math.op.binary
 
 import spock.lang.Specification
 

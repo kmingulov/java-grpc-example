@@ -1,6 +1,18 @@
-package com.github.kmingulov.math.op;
+package com.github.kmingulov.math.op.binary;
 
-public interface BinaryOperation {
+import com.github.kmingulov.math.op.Operation;
+
+public interface BinaryOperation extends Operation {
+
+    @Override
+    default int operandsCount() {
+        return 2;
+    }
+
+    @Override
+    default double apply(double[] args) {
+        return compute(args[0], args[1]);
+    }
 
     double compute(double a, double b);
 
