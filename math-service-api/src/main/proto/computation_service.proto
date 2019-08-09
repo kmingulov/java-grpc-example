@@ -33,3 +33,12 @@ message ComputationResult {
         double result = 3;
     }
 }
+
+message ComputationEvent {
+    ComputationId id = 1;
+    ComputationState state = 2;
+    oneof error_or_result {
+        string error = 3;
+        double result = 4;
+    }
+}

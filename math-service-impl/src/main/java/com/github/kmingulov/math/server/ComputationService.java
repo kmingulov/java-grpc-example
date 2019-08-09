@@ -4,7 +4,6 @@ import com.github.kmingulov.math.calc.Calculator;
 import com.github.kmingulov.math.model.*;
 import com.github.kmingulov.math.op.fun.PrimeFunction;
 import com.github.kmingulov.math.worker.AsyncComputationWorker;
-import com.github.kmingulov.math.worker.ComputationEvent;
 import com.github.kmingulov.math.worker.ComputationWorker;
 import com.google.common.annotations.VisibleForTesting;
 import io.grpc.stub.StreamObserver;
@@ -50,7 +49,7 @@ final class ComputationService extends ComputationServiceGrpc.ComputationService
                     .setState(event.getState());
 
             if (event.getState() == ComputationState.ERROR) {
-                builder.setError(event.getError().getMessage());
+                builder.setError(event.getError());
             }
 
             if (event.getState() == ComputationState.COMPUTED) {

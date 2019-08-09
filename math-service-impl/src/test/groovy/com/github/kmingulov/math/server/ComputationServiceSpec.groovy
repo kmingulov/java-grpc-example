@@ -1,17 +1,17 @@
 package com.github.kmingulov.math.server
 
+import com.github.kmingulov.math.model.ComputationEvent
 import com.github.kmingulov.math.model.ComputationId
 import com.github.kmingulov.math.model.ComputationRequest
 import com.github.kmingulov.math.model.ComputationResult
-import com.github.kmingulov.math.worker.ComputationEvent
 import com.github.kmingulov.math.worker.ComputationWorker
 import io.grpc.stub.StreamObserver
 import spock.lang.Specification
 
 import java.util.function.Consumer
 
+import static com.github.kmingulov.math.model.ComputationEvents.*
 import static com.github.kmingulov.math.model.ComputationState.*
-import static com.github.kmingulov.math.worker.ComputationEvent.*
 
 class ComputationServiceSpec extends Specification {
 

@@ -1,5 +1,6 @@
 package com.github.kmingulov.math.worker
 
+import com.github.kmingulov.math.model.ComputationEvent
 import com.github.kmingulov.math.model.ComputationId
 import com.github.kmingulov.math.calc.Calculator
 import spock.lang.Specification
@@ -7,7 +8,7 @@ import spock.lang.Specification
 import java.util.concurrent.ConcurrentHashMap
 import java.util.function.Consumer
 
-import static com.github.kmingulov.math.worker.ComputationEvent.*
+import static com.github.kmingulov.math.model.ComputationEvents.*
 
 class AsyncComputationWorkerSpec extends Specification {
 
@@ -18,7 +19,7 @@ class AsyncComputationWorkerSpec extends Specification {
         return 0 as double
     }
 
-    private static final Exception THROWN_EXCEPTION = new IllegalArgumentException()
+    private static final Exception THROWN_EXCEPTION = new IllegalArgumentException('Some error')
     private static final Calculator THROWING_CALCULATOR = { expression ->
         Thread.sleep(100)
         throw THROWN_EXCEPTION

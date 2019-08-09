@@ -1,5 +1,6 @@
 package com.github.kmingulov.math.worker;
 
+import com.github.kmingulov.math.model.ComputationEvent;
 import com.github.kmingulov.math.model.ComputationId;
 import com.github.kmingulov.math.calc.Calculator;
 
@@ -9,7 +10,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
-import static com.github.kmingulov.math.worker.ComputationEvent.*;
+import static com.github.kmingulov.math.model.ComputationEvents.*;
 
 public final class AsyncComputationWorker implements ComputationWorker, AutoCloseable {
 
