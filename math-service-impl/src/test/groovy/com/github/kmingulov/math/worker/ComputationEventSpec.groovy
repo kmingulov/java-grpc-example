@@ -1,9 +1,9 @@
 package com.github.kmingulov.math.worker
 
-import com.github.kmingulov.math.ComputationId
+import com.github.kmingulov.math.model.ComputationId
 import spock.lang.Specification
 
-import static com.github.kmingulov.math.ComputationState.*
+import static com.github.kmingulov.math.model.ComputationState.*
 import static com.github.kmingulov.math.worker.ComputationEvent.*
 
 class ComputationEventSpec extends Specification {

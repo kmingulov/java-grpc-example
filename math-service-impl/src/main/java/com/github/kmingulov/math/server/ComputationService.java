@@ -1,7 +1,7 @@
 package com.github.kmingulov.math.server;
 
-import com.github.kmingulov.math.*;
 import com.github.kmingulov.math.calc.Calculator;
+import com.github.kmingulov.math.model.*;
 import com.github.kmingulov.math.worker.AsyncComputationWorker;
 import com.github.kmingulov.math.worker.ComputationEvent;
 import com.github.kmingulov.math.worker.ComputationWorker;

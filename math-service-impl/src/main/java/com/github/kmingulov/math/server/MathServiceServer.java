@@ -1,21 +1,18 @@
-package com.github.kmingulov.math;
+package com.github.kmingulov.math.server;
 
-import com.github.kmingulov.math.server.ComputationService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 public class MathServiceServer {
 
     private static final int PORT = 8888;
 
     private Server server;
-    private Logger logger = Logger.getLogger(MathServiceServer.class.getName());
 
     private void start() throws IOException {
-        logger.info("Starting the server on " + PORT + "...");
+        System.out.println("Starting the server on " + PORT + "...");
 
         server = ServerBuilder.forPort(PORT)
                 .addService(new ComputationService())
@@ -24,14 +21,14 @@ public class MathServiceServer {
 
         Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
 
-        logger.info("Server started!");
+        System.out.println("Server started!");
     }
 
     private void stop() {
         if (server != null) {
-            logger.info("Stopping the server...");
+            System.out.println("Stopping the server...");
             server.shutdown();
-            logger.info("Server stopped!");
+            System.out.println("Server stopped!");
         }
     }
 

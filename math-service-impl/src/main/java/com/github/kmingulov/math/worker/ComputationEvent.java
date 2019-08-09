@@ -1,7 +1,7 @@
 package com.github.kmingulov.math.worker;
 
-import com.github.kmingulov.math.ComputationId;
-import com.github.kmingulov.math.ComputationState;
+import com.github.kmingulov.math.model.ComputationId;
+import com.github.kmingulov.math.model.ComputationState;
 
 import java.util.Objects;
 

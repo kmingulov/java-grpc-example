@@ -1,6 +1,6 @@
 package com.github.kmingulov.math.worker;
 
-import com.github.kmingulov.math.ComputationId;
+import com.github.kmingulov.math.model.ComputationId;
 import com.github.kmingulov.math.calc.Calculator;
 
 import java.util.UUID;
