@@ -1,4 +1,5 @@
 ext {
+    bytebuddyVersion = '1.10.0'
     groovyVersion = '2.5.7'
     grpcVersion = '1.22.1'
     guavaVersion = '28.0-jre'

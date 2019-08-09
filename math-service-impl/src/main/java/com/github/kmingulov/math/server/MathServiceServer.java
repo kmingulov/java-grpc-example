@@ -5,43 +5,36 @@ import io.grpc.ServerBuilder;
 
 import java.io.IOException;
 
-public class MathServiceServer {
+class MathServiceServer {
 
-    private static final int PORT = 8888;
+    private final Server server;
 
-    private Server server;
+    MathServiceServer(Server server) {
+        this.server = server;
+    }
 
-    private void start() throws IOException {
-        System.out.println("Starting the server on " + PORT + "...");
-
-        server = ServerBuilder.forPort(PORT)
+    MathServiceServer(int port) {
+        this.server = ServerBuilder.forPort(port)
                 .addService(new ComputationService())
-                .build()
-                .start();
+                .build();
+    }
 
-        Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
-
+    void start() throws IOException {
+        System.out.println("Starting the server on " + server.getPort() + "...");
+        server.start();
         System.out.println("Server started!");
     }
 
-    private void stop() {
-        if (server != null) {
-            System.out.println("Stopping the server...");
-            server.shutdown();
-            System.out.println("Server stopped!");
-        }
+    void stop() {
+        System.out.println("Stopping the server...");
+        server.shutdown();
+        System.out.println("Server stopped!");
     }
 
-    private void blockUntilShutdown() throws InterruptedException {
+    void blockUntilShutdown() throws InterruptedException {
         if (server != null) {
             server.awaitTermination();
         }
-    }
-
-    public static void main(String[] args) throws IOException, InterruptedException {
-        MathServiceServer server = new MathServiceServer();
-        server.start();
-        server.blockUntilShutdown();
     }
 
 }
