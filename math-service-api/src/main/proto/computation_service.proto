@@ -8,7 +8,6 @@ package math_service;
 
 service ComputationService {
     rpc ComputeExpression (ComputationRequest) returns (ComputationId) {}
-    rpc ComputeExpressions (stream ComputationRequest) returns (stream ComputationId) {}
     rpc GetComputationResult (ComputationId) returns (ComputationResult) {}
 }
 
