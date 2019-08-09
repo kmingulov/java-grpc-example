@@ -62,19 +62,19 @@ public class ComputationEvent {
         return state + "(id=" + id + ", result=" + result + ", error=" + error + ")";
     }
 
-    static ComputationEvent pending(ComputationId id) {
+    public static ComputationEvent pending(ComputationId id) {
         return new ComputationEvent(id, ComputationState.PENDING, null, null);
     }
 
-    static ComputationEvent running(ComputationId id) {
+    public static ComputationEvent running(ComputationId id) {
         return new ComputationEvent(id, ComputationState.RUNNING, null, null);
     }
 
-    static ComputationEvent error(ComputationId id, Exception e) {
+    public static ComputationEvent error(ComputationId id, Exception e) {
         return new ComputationEvent(id, ComputationState.ERROR, null, e);
     }
 
-    static ComputationEvent computed(ComputationId id, double result) {
+    public static ComputationEvent computed(ComputationId id, double result) {
         return new ComputationEvent(id, ComputationState.COMPUTED, result, null);
     }
 
