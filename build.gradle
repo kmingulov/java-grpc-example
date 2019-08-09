@@ -2,13 +2,15 @@ allprojects {
     repositories {
         jcenter()
     }
-
-    apply plugin: 'java'
-
-    sourceCompatibility = '11'
-    targetCompatibility = '11'
 }
 
 subprojects {
+    apply plugin: 'java'
+
+    apply from: '../dependencies.gradle'
+
     version = '0.1'
+
+    sourceCompatibility = '11'
+    targetCompatibility = '11'
 }

@@ -2,9 +2,6 @@ plugins {
     id 'com.google.protobuf' version '0.8.8'
 }
 
-def grpcVersion = '1.22.1'
-def protobufVersion = '3.7.1'
-
 sourceSets {
     main {
         java {
