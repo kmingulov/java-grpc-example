@@ -1,5 +1,6 @@
 package com.github.kmingulov.math.calc;
 
+@FunctionalInterface
 public interface Calculator {
 
     double compute(String expression);
