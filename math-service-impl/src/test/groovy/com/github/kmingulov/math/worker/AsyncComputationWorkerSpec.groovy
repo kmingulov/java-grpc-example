@@ -4,6 +4,7 @@ import com.github.kmingulov.math.ComputationId
 import com.github.kmingulov.math.calc.Calculator
 import spock.lang.Specification
 
+import java.util.concurrent.ConcurrentHashMap
 import java.util.function.Consumer
 
 import static com.github.kmingulov.math.worker.ComputationEvent.*
@@ -81,15 +82,15 @@ class AsyncComputationWorkerSpec extends Specification {
 
     private static final class EventCaptor implements Consumer<ComputationEvent> {
 
-        private final Set<ComputationEvent> events = [ ]
+        private final ConcurrentHashMap<ComputationEvent, Boolean> events = [ ]
 
         Set<ComputationEvent> getEvents() {
-            return new HashSet<>(events)
+            return new HashSet<>(events.keySet())
         }
 
         @Override
         void accept(ComputationEvent event) {
-            events.add(event)
+            events.put(event, true)
         }
 
     }
