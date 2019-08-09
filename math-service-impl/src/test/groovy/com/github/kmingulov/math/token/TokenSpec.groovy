@@ -4,54 +4,54 @@ import spock.lang.Specification
 
 class TokenSpec extends Specification {
 
-    def 'creates number token' () {
+    def 'creates number token'() {
         given:
-        Token token = Token.number('123')
+            Token token = Token.number('123')
 
         expect:
-        token.isNumber()
-        token.getType() == TokenType.NUMBER
-        token.getData() == '123'
+            token.isNumber()
+            token.getType() == TokenType.NUMBER
+            token.getData() == '123'
     }
 
-    def 'creates left parenthesis token' () {
+    def 'creates left parenthesis token'() {
         given:
-        Token token = Token.leftParenthesis()
+            Token token = Token.leftParenthesis()
 
         expect:
-        token.isLeftParenthesis()
-        token.getType() == TokenType.LEFT_PARENTHESIS
-        token.getData() == '('
+            token.isLeftParenthesis()
+            token.getType() == TokenType.LEFT_PARENTHESIS
+            token.getData() == '('
     }
 
-    def 'creates right parenthesis token' () {
+    def 'creates right parenthesis token'() {
         given:
-        Token token = Token.rightParenthesis()
+            Token token = Token.rightParenthesis()
 
         expect:
-        token.isRightParenthesis()
-        token.getType() == TokenType.RIGHT_PARENTHESIS
-        token.getData() == ')'
+            token.isRightParenthesis()
+            token.getType() == TokenType.RIGHT_PARENTHESIS
+            token.getData() == ')'
     }
 
-    def 'creates binary operation token' () {
+    def 'creates binary operation token'() {
         given:
-        Token token = Token.binaryOperation('?')
+            Token token = Token.binaryOperation('?')
 
         expect:
-        token.isBinaryOperation()
-        token.getType() == TokenType.BINARY_OPERATION
-        token.getData() == '?'
+            token.isBinaryOperation()
+            token.getType() == TokenType.BINARY_OPERATION
+            token.getData() == '?'
     }
 
-    def 'creates function token' () {
+    def 'creates function token'() {
         given:
-        Token token = Token.function('sin')
+            Token token = Token.function('sin')
 
         expect:
-        token.isFunction()
-        token.getType() == TokenType.FUNCTION
-        token.getData() == 'sin'
+            token.isFunction()
+            token.getType() == TokenType.FUNCTION
+            token.getData() == 'sin'
     }
 
 }

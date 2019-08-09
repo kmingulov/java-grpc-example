@@ -23,65 +23,65 @@ class AsyncComputationWorkerSpec extends Specification {
         throw THROWN_EXCEPTION
     }
 
-    def 'executes a task successfully' () {
+    def 'executes a task successfully'() {
         given:
-        ComputationWorker worker = new AsyncComputationWorker(SLOW_CALCULATOR)
-        EventCaptor eventCaptor = new EventCaptor()
+            ComputationWorker worker = new AsyncComputationWorker(SLOW_CALCULATOR)
+            EventCaptor eventCaptor = new EventCaptor()
 
         when:
-        ComputationId id = worker.submit(EXPRESSION, eventCaptor)
+            ComputationId id = worker.submit(EXPRESSION, eventCaptor)
 
         then:
-        Thread.sleep(500)
-        eventCaptor.getEvents() == [ pending(id), running(id), computed(id, 0) ].toSet()
+            Thread.sleep(500)
+            eventCaptor.getEvents() == [ pending(id), running(id), computed(id, 0) ].toSet()
 
         cleanup:
-        worker.close()
+            worker.close()
     }
 
-    def 'executes a task with an error' () {
+    def 'executes a task with an error'() {
         given:
-        ComputationWorker worker = new AsyncComputationWorker(THROWING_CALCULATOR)
-        EventCaptor eventCaptor = new EventCaptor()
+            ComputationWorker worker = new AsyncComputationWorker(THROWING_CALCULATOR)
+            EventCaptor eventCaptor = new EventCaptor()
 
         when:
-        ComputationId id = worker.submit(EXPRESSION, eventCaptor)
+            ComputationId id = worker.submit(EXPRESSION, eventCaptor)
 
         then:
-        Thread.sleep(500)
-        eventCaptor.getEvents() == [ pending(id), running(id), error(id, THROWN_EXCEPTION) ].toSet()
+            Thread.sleep(500)
+            eventCaptor.getEvents() == [ pending(id), running(id), error(id, THROWN_EXCEPTION) ].toSet()
 
         cleanup:
-        worker.close()
+            worker.close()
     }
 
-    def 'doesn\'t accept expressions when closed' () {
+    def 'doesn\'t accept expressions when closed'() {
         given:
-        ComputationWorker worker = new AsyncComputationWorker(SLOW_CALCULATOR)
-        worker.close()
+            ComputationWorker worker = new AsyncComputationWorker(SLOW_CALCULATOR)
+            worker.close()
 
         when:
-        worker.submit(EXPRESSION, new EventCaptor())
+            worker.submit(EXPRESSION, new EventCaptor())
 
         then:
-        thrown IllegalStateException
+            thrown IllegalStateException
     }
 
-    def 'throws when closed twice' () {
+    def 'throws when closed twice'() {
         given:
-        ComputationWorker worker = new AsyncComputationWorker(SLOW_CALCULATOR)
-        worker.close()
+            ComputationWorker worker = new AsyncComputationWorker(SLOW_CALCULATOR)
+            worker.close()
 
         when:
-        worker.close()
+            worker.close()
 
         then:
-        thrown IllegalStateException
+            thrown IllegalStateException
     }
 
     private static final class EventCaptor implements Consumer<ComputationEvent> {
 
-        private final Set<ComputationEvent> events = []
+        private final Set<ComputationEvent> events = [ ]
 
         Set<ComputationEvent> getEvents() {
             return new HashSet<>(events)

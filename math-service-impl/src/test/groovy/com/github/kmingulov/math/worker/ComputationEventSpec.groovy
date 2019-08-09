@@ -12,50 +12,50 @@ class ComputationEventSpec extends Specification {
             .setId('12345')
             .build();
 
-    def 'creates PENDING event' () {
+    def 'creates PENDING event'() {
         given:
-        ComputationEvent event = pending(ID)
+            ComputationEvent event = pending(ID)
 
         expect:
-        event.getId() == ID
-        event.getState() == PENDING
-        event.getResult() == null
-        event.getError() == null
+            event.getId() == ID
+            event.getState() == PENDING
+            event.getResult() == null
+            event.getError() == null
     }
 
-    def 'creates RUNNING event' () {
+    def 'creates RUNNING event'() {
         given:
-        ComputationEvent event = running(ID)
+            ComputationEvent event = running(ID)
 
         expect:
-        event.getId() == ID
-        event.getState() == RUNNING
-        event.getResult() == null
-        event.getError() == null
+            event.getId() == ID
+            event.getState() == RUNNING
+            event.getResult() == null
+            event.getError() == null
     }
 
-    def 'creates ERROR event' () {
+    def 'creates ERROR event'() {
         given:
-        Exception e = new NullPointerException()
-        ComputationEvent event = error(ID, e)
+            Exception e = new NullPointerException()
+            ComputationEvent event = error(ID, e)
 
         expect:
-        event.getId() == ID
-        event.getState() == ERROR
-        event.getResult() == null
-        event.getError() == e
+            event.getId() == ID
+            event.getState() == ERROR
+            event.getResult() == null
+            event.getError() == e
     }
 
-    def 'creates COMPUTED event' () {
+    def 'creates COMPUTED event'() {
         given:
-        double result = 123
-        ComputationEvent event = computed(ID, 123)
+            double result = 123
+            ComputationEvent event = computed(ID, 123)
 
         expect:
-        event.getId() == ID
-        event.getState() == COMPUTED
-        event.getResult() == result
-        event.getError() == null
+            event.getId() == ID
+            event.getState() == COMPUTED
+            event.getResult() == result
+            event.getError() == null
     }
 
 }
