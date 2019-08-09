@@ -2,8 +2,6 @@ package com.github.kmingulov.math.calc
 
 import spock.lang.Specification
 
-import static com.github.kmingulov.math.op.binary.BinaryOperation.*
-
 class DefaultCalculatorSpec extends Specification {
 
     def 'computes 5'() {
@@ -11,9 +9,19 @@ class DefaultCalculatorSpec extends Specification {
             arithmeticCalc().compute('5') == 5 as double
     }
 
+    def 'computes 3.1415'() {
+        expect:
+            arithmeticCalc().compute('3.1415') == 3.1415 as double
+    }
+
     def 'computes 5+3'() {
         expect:
             arithmeticCalc().compute('5+3') == 8 as double
+    }
+
+    def 'computes 3.14+3.15'() {
+        expect:
+            arithmeticCalc().compute('3.14+3.15') == 6.29 as double
     }
 
     def 'computes 5*3+2'() {
@@ -89,6 +97,14 @@ class DefaultCalculatorSpec extends Specification {
     def 'computes sin(sin(3))'() {
         expect:
             trigonometricCalc().compute('sin(sin(3))') == Math.sin(Math.sin(3))
+    }
+
+    def 'throws for invalid number'() {
+        when:
+            arithmeticCalc().compute('3.14.15')
+
+        then:
+            thrown IllegalArgumentException
     }
 
     def 'throws for unbalanced left parenthesis'() {

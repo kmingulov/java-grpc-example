@@ -11,6 +11,16 @@ class TokenizerSpec extends Specification {
             Tokenizer.tokenize('3') == [ number('3') ]
     }
 
+    def 'tokenizes 3.14'() {
+        expect:
+            Tokenizer.tokenize('3.14') == [ number('3.14') ]
+    }
+
+    def 'tokenizes 3.14.15'() {
+        expect:
+            Tokenizer.tokenize('3.14.15') == [ number('3.14.15') ]
+    }
+
     def 'tokenizes *'() {
         expect:
             Tokenizer.tokenize('*') == [ binaryOperation('*') ]

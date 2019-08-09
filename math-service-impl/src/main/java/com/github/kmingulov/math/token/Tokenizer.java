@@ -52,7 +52,7 @@ public final class Tokenizer {
             return TokenType.RIGHT_PARENTHESIS;
         }
 
-        if (DIGITS.contains(c)) {
+        if (c == '.' || DIGITS.contains(c)) {
             return TokenType.NUMBER;
         }
 
