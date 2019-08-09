@@ -11,15 +11,16 @@ import io.grpc.stub.StreamObserver;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-public final class ComputationService extends ComputationServiceGrpc.ComputationServiceImplBase {
+final class ComputationService extends ComputationServiceGrpc.ComputationServiceImplBase {
 
     private final ComputationWorker worker;
 
     private final ConcurrentMap<ComputationId, ComputationEvent> latestEventById = new ConcurrentHashMap<>();
 
-    public ComputationService() {
+    ComputationService() {
         Calculator calculator = Calculator.builder()
                 .arithmeticOperations()
+                .trigonometricFunctions()
                 .build();
 
         this.worker = new AsyncComputationWorker(calculator);

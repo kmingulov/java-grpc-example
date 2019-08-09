@@ -2,7 +2,7 @@ package com.github.kmingulov.math.calc
 
 import spock.lang.Specification
 
-import static com.github.kmingulov.math.op.BinaryOperation.*
+import static com.github.kmingulov.math.op.binary.BinaryOperation.*
 
 class DefaultCalculatorSpec extends Specification {
 
@@ -56,6 +56,41 @@ class DefaultCalculatorSpec extends Specification {
             arithmeticCalc().compute('1/2/4') == 0.125 as double
     }
 
+    def 'computes sin(1)'() {
+        expect:
+            trigonometricCalc().compute('sin(1)') == Math.sin(1)
+    }
+
+    def 'computes sin1'() {
+        expect:
+            trigonometricCalc().compute('sin1') == Math.sin(1)
+    }
+
+    def 'computes sin(1+2)'() {
+        expect:
+            trigonometricCalc().compute('sin(1+2)') == Math.sin(3)
+    }
+
+    def 'computes sin(1+2*(1+2))'() {
+        expect:
+            trigonometricCalc().compute('sin(1+2*(1+2))') == Math.sin(7)
+    }
+
+    def 'computes sin(1+2*(1+2))/3'() {
+        expect:
+            trigonometricCalc().compute('sin(1+2*(1+2))/3') == Math.sin(7) / 3 as double
+    }
+
+    def 'computes sin(3)+tan(2/5)'() {
+        expect:
+            trigonometricCalc().compute('sin(3)+tan(2/5)') == Math.sin(3) + Math.tan(0.4)
+    }
+
+    def 'computes sin(sin(3))'() {
+        expect:
+            trigonometricCalc().compute('sin(sin(3))') == Math.sin(Math.sin(3))
+    }
+
     def 'throws for unbalanced left parenthesis'() {
         when:
             arithmeticCalc().compute('(5+3')
@@ -72,7 +107,7 @@ class DefaultCalculatorSpec extends Specification {
             thrown IllegalArgumentException
     }
 
-    def 'throws for function calls'() {
+    def 'throws for unknown function calls'() {
         when:
             arithmeticCalc().compute('sin(5)')
 
@@ -105,7 +140,16 @@ class DefaultCalculatorSpec extends Specification {
     }
 
     private static Calculator arithmeticCalc() {
-        return new DefaultCalculator([ minus(), plus(), multiply(), divide() ])
+        return Calculator.builder()
+                .arithmeticOperations()
+                .build()
+    }
+
+    private static Calculator trigonometricCalc() {
+        return Calculator.builder()
+                .arithmeticOperations()
+                .trigonometricFunctions()
+                .build()
     }
 
 }
