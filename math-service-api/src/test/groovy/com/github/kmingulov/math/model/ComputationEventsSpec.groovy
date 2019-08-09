@@ -1,16 +1,15 @@
-package com.github.kmingulov.math.worker
+package com.github.kmingulov.math.model
 
-import com.github.kmingulov.math.model.ComputationId
 import spock.lang.Specification
 
+import static com.github.kmingulov.math.model.ComputationEvents.*
 import static com.github.kmingulov.math.model.ComputationState.*
-import static com.github.kmingulov.math.worker.ComputationEvent.*
 
-class ComputationEventSpec extends Specification {
+class ComputationEventsSpec extends Specification {
 
     private static final ComputationId ID = ComputationId.newBuilder()
             .setId('12345')
-            .build();
+            .build()
 
     def 'creates PENDING event'() {
         given:
@@ -19,8 +18,8 @@ class ComputationEventSpec extends Specification {
         expect:
             event.getId() == ID
             event.getState() == PENDING
-            event.getResult() == null
-            event.getError() == null
+            event.getResult() == 0
+            event.getError() == ''
     }
 
     def 'creates RUNNING event'() {
@@ -30,20 +29,20 @@ class ComputationEventSpec extends Specification {
         expect:
             event.getId() == ID
             event.getState() == RUNNING
-            event.getResult() == null
-            event.getError() == null
+            event.getResult() == 0
+            event.getError() == ''
     }
 
     def 'creates ERROR event'() {
         given:
-            Exception e = new NullPointerException()
+            Exception e = new NullPointerException('some error')
             ComputationEvent event = error(ID, e)
 
         expect:
             event.getId() == ID
             event.getState() == ERROR
-            event.getResult() == null
-            event.getError() == e
+            event.getResult() == 0
+            event.getError() == e.getMessage()
     }
 
     def 'creates COMPUTED event'() {
@@ -55,7 +54,6 @@ class ComputationEventSpec extends Specification {
             event.getId() == ID
             event.getState() == COMPUTED
             event.getResult() == result
-            event.getError() == null
+            event.getError() == ''
     }
-
 }
