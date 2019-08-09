@@ -20,7 +20,7 @@ final class MathServiceServer {
     }
 
     void start() throws IOException {
-        System.out.println("Starting the server on " + server.getPort() + "...");
+        System.out.println("Starting the server...");
         server.start();
         System.out.println("Server started!");
     }
