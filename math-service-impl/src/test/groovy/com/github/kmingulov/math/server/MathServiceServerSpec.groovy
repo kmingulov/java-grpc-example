@@ -5,11 +5,10 @@ import spock.lang.Specification
 
 class MathServiceServerSpec extends Specification {
 
-    def 'starts the server'() {
-        given:
-            Server grpcServer = Mock()
-            MathServiceServer server = new MathServiceServer(grpcServer)
+    private Server grpcServer = Mock()
+    private MathServiceServer server = new MathServiceServer(grpcServer)
 
+    def 'starts the server'() {
         when:
             server.start()
 
@@ -18,10 +17,6 @@ class MathServiceServerSpec extends Specification {
     }
 
     def 'stops the server'() {
-        given:
-            Server grpcServer = Mock()
-            MathServiceServer server = new MathServiceServer(grpcServer)
-
         when:
             server.start()
             server.stop()
@@ -32,10 +27,6 @@ class MathServiceServerSpec extends Specification {
     }
 
     def 'awaits the server termination'() {
-        given:
-            Server grpcServer = Mock()
-            MathServiceServer server = new MathServiceServer(grpcServer)
-
         when:
             server.start()
             server.blockUntilShutdown()

@@ -8,7 +8,7 @@ class AbstractFunction implements Function {
 
     private final java.util.function.Function<double[], Double> function;
 
-    public AbstractFunction(String name,
+    AbstractFunction(String name,
                             int operandsCount,
                             java.util.function.Function<double[], Double> function) {
         this.name = name;
