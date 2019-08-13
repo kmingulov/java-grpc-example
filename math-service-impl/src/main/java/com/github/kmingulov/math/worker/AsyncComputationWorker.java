@@ -48,7 +48,11 @@ public final class AsyncComputationWorker implements ComputationWorker, AutoClos
         ComputationId id = ComputationId.newBuilder().setId(stringId).build();
 
         WorkUnit workUnit = new WorkUnit(id, expression, progressListener);
-        queue.offer(workUnit);
+        try {
+            queue.put(workUnit);
+        } catch (InterruptedException e) {
+            throw new IllegalStateException("Failed to put a work unit into the queue.", e);
+        }
 
         progressListener.accept(pending(id));
 
