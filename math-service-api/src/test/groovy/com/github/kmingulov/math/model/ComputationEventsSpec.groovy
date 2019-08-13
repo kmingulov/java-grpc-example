@@ -33,7 +33,7 @@ class ComputationEventsSpec extends Specification {
             event.getError() == ''
     }
 
-    def 'creates ERROR event'() {
+    def 'creates ERROR event when exception has a message'() {
         given:
             Exception e = new NullPointerException('some error')
             ComputationEvent event = error(ID, e)
@@ -43,6 +43,18 @@ class ComputationEventsSpec extends Specification {
             event.getState() == ERROR
             event.getResult() == 0
             event.getError() == e.getMessage()
+    }
+
+    def 'creates ERROR event when exception has no message'() {
+        given:
+            Exception e = new NullPointerException()
+            ComputationEvent event = error(ID, e)
+
+        expect:
+            event.getId() == ID
+            event.getState() == ERROR
+            event.getResult() == 0
+            event.getError() == 'java.lang.NullPointerException'
     }
 
     def 'creates COMPUTED event'() {

@@ -24,7 +24,7 @@ public class ComputationEvents {
         return ComputationEvent.newBuilder()
                 .setId(id)
                 .setState(ERROR)
-                .setError(e.getMessage())
+                .setError(e.getMessage() != null ? e.getMessage() : e.getClass().getName())
                 .build();
     }
 
