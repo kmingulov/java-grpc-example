@@ -2,6 +2,7 @@ package com.github.kmingulov.math.client;
 
 import com.github.kmingulov.math.model.ComputationServiceGrpc;
 import com.github.kmingulov.math.model.ComputationServiceGrpc.ComputationServiceBlockingStub;
+import com.github.kmingulov.math.model.ComputationServiceGrpc.ComputationServiceStub;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
@@ -17,9 +18,10 @@ public final class Main {
                 .usePlaintext()
                 .build();
 
-        ComputationServiceBlockingStub computationService = ComputationServiceGrpc.newBlockingStub(channel);
+        ComputationServiceBlockingStub blockingStub = ComputationServiceGrpc.newBlockingStub(channel);
+        ComputationServiceStub asyncStub = ComputationServiceGrpc.newStub(channel);
 
-        MathServiceClient client = new MathServiceClient(computationService, System.in, System.out);
+        MathServiceClient client = new MathServiceClient(blockingStub, asyncStub, System.in, System.out);
         try {
             client.start();
         } finally {
