@@ -6,9 +6,12 @@ option java_outer_classname = "ComputationServiceProto";
 
 package math_service;
 
+import "streaming.proto";
+
 service ComputationService {
     rpc ComputeExpression (ComputationRequest) returns (ComputationId) {}
     rpc GetComputationResult (ComputationId) returns (ComputationResult) {}
+    rpc StreamComputationEvents (stream streaming.StreamingStop) returns (stream ComputationEvent) {}
 }
 
 message ComputationId {

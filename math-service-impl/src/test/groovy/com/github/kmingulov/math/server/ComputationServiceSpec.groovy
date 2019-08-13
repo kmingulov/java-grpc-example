@@ -4,6 +4,7 @@ import com.github.kmingulov.math.model.ComputationEvent
 import com.github.kmingulov.math.model.ComputationId
 import com.github.kmingulov.math.model.ComputationRequest
 import com.github.kmingulov.math.model.ComputationResult
+import com.github.kmingulov.math.model.StreamingStop
 import com.github.kmingulov.math.worker.ComputationWorker
 import io.grpc.stub.StreamObserver
 import spock.lang.Specification
@@ -27,12 +28,8 @@ class ComputationServiceSpec extends Specification {
 
     def 'submits expression'() {
         given:
-            ComputationWorker worker = Mock(ComputationWorker) {
-                submit(EXPRESSION, _ as Consumer) >> ID
-            }
-
+            ComputationWorker worker = new DummyWorker(ID, pending(ID))
             ComputationService service = new ComputationService(worker)
-
             StreamObserver<ComputationId> observer = Mock(StreamObserver)
 
         when:
@@ -58,14 +55,9 @@ class ComputationServiceSpec extends Specification {
 
     def 'persists and returns event submitted by the worker'(ComputationEvent event, ComputationResult result) {
         given:
-            ComputationWorker worker = Mock(ComputationWorker) {
-                submit(EXPRESSION, _ as Consumer) >> { args ->
-                    args[1].accept(event)
-                    return ID
-                }
-            }
-
+            ComputationWorker worker = new DummyWorker(ID, event)
             ComputationService service = new ComputationService(worker)
+
             service.computeExpression(REQUEST, Mock(StreamObserver))
 
             StreamObserver<ComputationResult> observer = Mock(StreamObserver)
@@ -89,6 +81,88 @@ class ComputationServiceSpec extends Specification {
                     .setState(COMPUTED)
                     .setResult(42)
                     .build()
+    }
+
+    def 'streams events'() {
+        given:
+            ComputationWorker worker = new DummyWorker(ID, pending(ID))
+            ComputationService service = new ComputationService(worker)
+            StreamObserver<ComputationEvent> responseObserver = Mock()
+
+        when:
+            service.computeExpression(REQUEST, Mock(StreamObserver))
+            StreamObserver<StreamingStop> requestObserver = service.streamComputationEvents(responseObserver)
+            service.computeExpression(REQUEST, Mock(StreamObserver))
+            requestObserver.onCompleted()
+
+        then:
+            1 * responseObserver.onNext(pending(ID))
+    }
+
+    def 'stops streaming when request stream is completed'() {
+        given:
+            ComputationWorker worker = new DummyWorker(ID, pending(ID))
+            ComputationService service = new ComputationService(worker)
+            StreamObserver<ComputationEvent> responseObserver = Mock()
+
+        when:
+            StreamObserver<StreamingStop> requestObserver = service.streamComputationEvents(responseObserver)
+            service.computeExpression(REQUEST, Mock(StreamObserver))
+            requestObserver.onCompleted()
+            service.computeExpression(REQUEST, Mock(StreamObserver))
+
+        then:
+            1 * responseObserver.onNext(pending(ID))
+    }
+
+    def 'stops streaming when request stream contains StreamingStop'() {
+        given:
+            ComputationWorker worker = new DummyWorker(ID, pending(ID))
+            ComputationService service = new ComputationService(worker)
+            StreamObserver<ComputationEvent> responseObserver = Mock()
+
+        when:
+            StreamObserver<StreamingStop> requestObserver = service.streamComputationEvents(responseObserver)
+            service.computeExpression(REQUEST, Mock(StreamObserver))
+            requestObserver.onNext(StreamingStop.getDefaultInstance())
+            service.computeExpression(REQUEST, Mock(StreamObserver))
+
+        then:
+            1 * responseObserver.onNext(pending(ID))
+    }
+
+    def 'stops streaming when request stream contains error'() {
+        given:
+            ComputationWorker worker = new DummyWorker(ID, pending(ID))
+            ComputationService service = new ComputationService(worker)
+            StreamObserver<ComputationEvent> responseObserver = Mock()
+
+        when:
+            StreamObserver<StreamingStop> requestObserver = service.streamComputationEvents(responseObserver)
+            service.computeExpression(REQUEST, Mock(StreamObserver))
+            requestObserver.onError(new NullPointerException())
+            service.computeExpression(REQUEST, Mock(StreamObserver))
+
+        then:
+            1 * responseObserver.onNext(pending(ID))
+    }
+
+    private static final class DummyWorker implements ComputationWorker {
+
+        private final ComputationId idToReturn
+        private final ComputationEvent eventToTrigger
+
+        DummyWorker(ComputationId idToReturn, ComputationEvent eventToTrigger) {
+            this.idToReturn = idToReturn
+            this.eventToTrigger = eventToTrigger
+        }
+
+        @Override
+        ComputationId submit(String expression, Consumer<ComputationEvent> progressListener) {
+            progressListener.accept(eventToTrigger)
+            return idToReturn
+        }
+
     }
 
 }
