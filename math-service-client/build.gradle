@@ -5,11 +5,16 @@ buildscript {
 }
 
 apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'groovy'
 
 dependencies {
     implementation project(':math-service-api')
 
+    testImplementation group: 'io.grpc', name: 'grpc-core', version: grpcVersion
     runtimeOnly group: 'io.grpc', name: 'grpc-netty-shaded', version: grpcVersion
+
+    testImplementation group: 'org.codehaus.groovy', name: 'groovy-all', version: groovyVersion
+    testImplementation group: 'org.spockframework', name: 'spock-core', version: spockVersion
 }
 
 jar {
